@@ -1,0 +1,16 @@
+{% extends "layout.html.twig" %}
+{% block content %}
+    <h1>{{ title }}</h1>
+    <ul>
+        {% for stock in stocks %}
+            <li>{{ stock.producto.nombre }}: {{ stock.cantidad }} ({{ stock.fecha|date('Y-m-d') }})</li>
+        {% endfor %}
+    </ul>
+    <form action="/stock" method="post">
+		<h3> Mostrar stock por fecha </h3>
+        <input type="date" name="fecha" required>
+        <button type="submit">mostrar</button>
+    </form>
+
+
+{% endblock %}

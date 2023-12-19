@@ -1,0 +1,47 @@
+{% extends "base.html.twig" %}
+
+{% block layout %}
+<div id="wrapper">
+	<div id="header">
+		<div id="logo">
+			<h1><a href="#">BAR JUAN</a></h1>
+		</div>
+		<div id="slogan">
+			<h2>Script by: Sento Montes</h2>
+		</div>
+	</div>
+	<div id="menu">
+		<ul>
+			<li class="first current_page_item"><a href="/">Inicio</a></li>
+			<li><a href="/stock">Stock</a></li>
+			<li><a href="/pedidos">Pedidos</a></li>
+			</li>
+		</ul>
+	</div>
+	<div id="splash">
+		<img class="pic" src="/images/pic01.jpg" width="870" height="230" alt="" />
+	</div>
+<div id="page">
+{% block content %}
+{% endblock %}
+</div>
+<div id="footer">
+	&copy; Untitled. All rights reserved. Design by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>.
+</div>
+
+{# <script>
+document.addEventListener("DOMContentLoaded", function(){
+    var botonPedidos = document.getElementById("botonPedidos");
+    var dropdown = document.getElementById("dropdown");
+
+    botonPedidos.onclick = function() {
+        if (dropdown.style.display == "none") {
+            dropdown.style.display = "block";
+        } else {
+            dropdown.style.display = "none";
+        }
+    };
+});
+</script>  #}
+{% endblock %}
+

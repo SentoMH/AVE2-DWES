@@ -1,0 +1,21 @@
+{
+    "name": "daw-dwes/aev2-vmh",
+    "authors": [
+        {
+            "name": "sento montes",
+            "email": "vimonhe@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "AP\\":"src/"
+        }
+    },
+    "require": {
+        "vlucas/phpdotenv": "^5.6",
+        "twig/twig": "^3.8",
+        "doctrine/orm": "^2.17",
+        "symfony/cache": "^6.4",
+        "symfony/var-dumper": "^6.4"
+    }
+}

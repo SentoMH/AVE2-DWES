@@ -1,0 +1,34 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+    <h1>Crear Pedido</h1>
+    {% if mensajeExito %}
+        <div class="alert alert-success">{{ mensajeExito }}</div>
+    {% endif %}
+    
+    <form action="pedidos" method="post">
+        <div class="form-group">
+            <label for="idProveedor">ID del Proveedor:</label>
+            <input type="number" id="idProveedor" name="idProveedor" min="1" required class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="detalles">Detalles:</label>
+            <textarea id="detalles" name="detalles" class="form-control"></textarea>
+        </div>
+        {% for producto in productos %}
+            <div class="form-group">
+                <label for="producto">Producto:</label>
+                <select type="text" id="productos{{loop.index}}" name="productos[{{loop.index}}]">
+                {% for prod in productos %}
+                    <option value="{{ prod.id }}">{{ prod.nombre }}</option>
+                {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="cantidad">Cantidad:</label>
+                <input type="number" id="cantidad" name="cantidad{{loop.index}}" min="1">
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Crear Pedido</button>
+    </form>
+{% endblock %}
