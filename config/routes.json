@@ -10,5 +10,9 @@
     "/pedidos": {
         "controller": "PedidosController",
         "action": "pedidos"
+    },
+    "/crearPedidos": {
+        "controller": "MainController",
+        "action": "crearPedidos"
     }
 }
