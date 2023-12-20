@@ -16,19 +16,22 @@
             <textarea id="detalles" name="detalles" class="form-control"></textarea>
         </div>
         {% for producto in productos %}
-            <div class="form-group">
-                <label for="producto">Producto:</label>
-                <select type="text" id="productos{{loop.index}}" name="productos[{{loop.index}}]">
+        <div class="form-group">
+            <label for="producto{{ loop.index }}">Producto:</label>
+            <select id="producto{{ loop.index }}" name="productos[{{ loop.index }}][producto]" class="form-control">
+                <option value="" selected>Selecciona un producto</option>
                 {% for prod in productos %}
-                    <option value="{{ prod.id }}">{{ prod.nombre }}</option>
+                    <option value="{{ prod.idProducto }}">
+                        {{ prod.nombre }}
+                    </option>
                 {% endfor %}
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="cantidad">Cantidad:</label>
-                <input type="number" id="cantidad" name="cantidad{{loop.index}}" min="1">
-            </div>
-        {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="cantidad{{ loop.index }}">Cantidad:</label>
+            <input type="number" id="cantidad{{ loop.index }}" name="productos[{{ loop.index }}][cantidad]" min="0" required class="form-control" value="{{ producto.cantidad|default('0') }}">
+        </div>
+    {% endfor %}
         <button type="submit" class="btn btn-primary">Crear Pedido</button>
     </form>
 {% endblock %}

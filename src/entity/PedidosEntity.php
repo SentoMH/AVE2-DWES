@@ -11,11 +11,12 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use DateTime;
+use JsonSerializable;
 
 
 #[Entity(repositoryClass: PedidosRepository::class)]
 #[Table(name: "pedidos")]
-class PedidosEntity
+class PedidosEntity implements JsonSerializable
 {
     #[Id]
     #[GeneratedValue]
@@ -34,6 +35,16 @@ class PedidosEntity
     #[ManyToOne(targetEntity: ProveedoresEntity::class, inversedBy: 'pedidos')]
     #[JoinColumn(name: 'idProveedor', referencedColumnName: 'idProveedor')]
     private ProveedoresEntity $proveedor;
+
+    public function jsonSerialize() {
+        return [
+            'idPedidos' => $this->getIdPedidos(),
+            'fecha' => $this->getFecha(),
+            'detalles' => $this->getDetalles(),
+            'estado' => $this->getEstado(),
+            'idProveedor' => $this->proveedor
+        ];
+    }
 
 
     public function getIdPedidos()

@@ -10,10 +10,11 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\JoinColumn;
+use JsonSerializable;
 
 #[Entity(repositoryClass: LineasPedidosRepository::class)]
 #[Table(name: "lineaspedidos")]
-class LineasPedidosEntity
+class LineasPedidosEntity implements JsonSerializable
 {
     #[Id]
     #[GeneratedValue]
@@ -34,9 +35,20 @@ class LineasPedidosEntity
     #[Column(name: 'entregado', type: 'boolean')]
     private bool $entregado;
 
+    public function jsonSerialize()
+    {
+        return [
+            'idLinea' => $this->getIdLinea(),
+            'cantidad' => $this->getCantidad(),
+            'entregado' => $this->getEntregado(),
+            'idPedido' => $this->pedido,
+            'idProducto' => $this->producto
+        ];
+    }
+
     /**
      * Get the value of idLinea
-     */ 
+     */
     public function getIdLinea()
     {
         return $this->idLinea;
@@ -46,7 +58,7 @@ class LineasPedidosEntity
      * Set the value of pedido
      *
      * @return  self
-     */ 
+     */
     public function setPedido($pedido)
     {
         $this->pedido = $pedido;
@@ -58,7 +70,7 @@ class LineasPedidosEntity
      * Set the value of producto
      *
      * @return  self
-     */ 
+     */
     public function setProducto($producto)
     {
         $this->producto = $producto;
@@ -68,7 +80,7 @@ class LineasPedidosEntity
 
     /**
      * Get the value of producto
-     */ 
+     */
     public function getProducto()
     {
         return $this->producto;
@@ -76,7 +88,7 @@ class LineasPedidosEntity
 
     /**
      * Get the value of cantidad
-     */ 
+     */
     public function getCantidad()
     {
         return $this->cantidad;
@@ -86,7 +98,7 @@ class LineasPedidosEntity
      * Set the value of cantidad
      *
      * @return  self
-     */ 
+     */
     public function setCantidad($cantidad)
     {
         $this->cantidad = $cantidad;
@@ -96,7 +108,7 @@ class LineasPedidosEntity
 
     /**
      * Get the value of entregado
-     */ 
+     */
     public function getEntregado()
     {
         return $this->entregado;
@@ -106,7 +118,7 @@ class LineasPedidosEntity
      * Set the value of entregado
      *
      * @return  self
-     */ 
+     */
     public function setEntregado($entregado)
     {
         $this->entregado = $entregado;
@@ -116,7 +128,7 @@ class LineasPedidosEntity
 
     /**
      * Get the value of pedido
-     */ 
+     */
     public function getPedido()
     {
         return $this->pedido;
