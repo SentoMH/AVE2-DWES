@@ -12,7 +12,11 @@
         "action": "pedidos"
     },
     "/crearPedidos": {
-        "controller": "MainController",
+        "controller": "PedidosController",
         "action": "crearPedidos"
+    },
+    "/listarPedidos": {
+        "controller": "PedidosController",
+        "action": "listarPedidos"
     }
 }

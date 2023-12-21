@@ -12,10 +12,11 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\Table;
+use JsonSerializable;
 
 #[Entity(repositoryClass: ProveedoresRepository::class)]
 #[Table(name: "proveedores")]
-class ProveedoresEntity
+class ProveedoresEntity implements JsonSerializable
 {
     #[Id]
     #[GeneratedValue]
@@ -46,6 +47,19 @@ class ProveedoresEntity
     public function __construct()
     {
         $this->pedidos = new ArrayCollection();
+    }
+    public function jsonSerialize()
+    {
+        return [
+            'idProveedor' => $this->getIdProveedor(),
+            'nombreProveedor' => $this->getNombreProveedor(),
+            'cifProveedor' => $this->getCifProveedor(),
+            'direccionProveedor' => $this->getDireccionProveedor(),
+            'telefonoProveedor' => $this->getTelefonoProveedor(),
+            'emailProveedor' => $this->getEmailProveedor(),
+            'contactoProveedor' => $this->getContactoProveedor(),
+            'pedidos' => $this->getPedidos()
+        ];
     }
 
 

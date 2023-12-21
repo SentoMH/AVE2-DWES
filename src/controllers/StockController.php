@@ -5,6 +5,7 @@ namespace AP\Controllers;
 use AP\Entity\StockEntity;
 use AP\Core\AbstractController;
 use AP\Core\EntityManager;
+use DateTime;
 
 class StockController extends AbstractController
 {
@@ -20,17 +21,26 @@ class StockController extends AbstractController
     {
         $entityM = $this->em->getEntityManager();
         $stockRepository = $entityM->getRepository(StockEntity::class);
+        $allStocks = $stockRepository->findAll();
 
-        $fecha = $_POST['fecha'] ?? null;
+        $dateTime = new DateTime();
+        $stocksToShow = [];
 
-        if ($fecha) {
-            $stocks = $stockRepository->findByDate($fecha);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['fecha'])) {
+
+            $date = DateTime::createFromFormat('Y-m-d\TH:i', $_POST['fecha']);
+            if ($date) {
+                $stocksToShow = $stockRepository->findByDate($allStocks, $date->format('Y-m-d H:i:s'));
+            }
         } else {
-            $stocks = $stockRepository->findAll();
+
+            $stocksToShow = $stockRepository->lastStock($allStocks, $dateTime->format('Y-m-d H:i:s'));
         }
+
         $this->render("stock.html.twig", [
             'title' => 'Stock',
-            'stocks' => $stocks,
+            'fecha' => $dateTime->format('Y-m-d H:i:s'),
+            'stocks' => $stocksToShow
         ]);
     }
 }

@@ -29,7 +29,10 @@
             <input type="number" id="cantidad{{ loop.index }}" name="productos[{{ loop.index }}][cantidad]" min="0" required class="form-control" value="{{ producto.cantidad|default('0') }}">
         </div>
     {% endfor %}
-        <button type="submit" class="btn btn-primary">Crear Pedido</button>
+        <button type="submit">Crear Pedido</button>
+    </form>
+    <form action="/listarPedidos" method="POST">
+        <button type="submit">Listar Pedidos</button>
     </form>
 
 {% endblock %}
