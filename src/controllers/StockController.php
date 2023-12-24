@@ -27,7 +27,7 @@ class StockController extends AbstractController
         $stocksToShow = [];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['fecha'])) {
-
+            
             $date = DateTime::createFromFormat('Y-m-d\TH:i', $_POST['fecha']);
             if ($date) {
                 $stocksToShow = $stockRepository->findByDate($allStocks, $date->format('Y-m-d H:i:s'));

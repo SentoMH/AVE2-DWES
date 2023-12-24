@@ -3,7 +3,6 @@
 namespace AP\Entity;
 
 use AP\Repository\TicketRepository;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\Column;
@@ -37,8 +36,5 @@ class TicketEntity
 
     public function __construct()
     {
-        // Aquí puedes inicializar valores por defecto si lo necesitas
     }
-
-    // Implementación de los getters y setters...
 }

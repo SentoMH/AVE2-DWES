@@ -18,5 +18,9 @@
     "/listarPedidos": {
         "controller": "PedidosController",
         "action": "listarPedidos"
+    },
+    "/comandas": {
+        "controller": "ComandasController",
+        "action": "createComanda"
     }
 }
