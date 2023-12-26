@@ -22,5 +22,9 @@
     "/comandas": {
         "controller": "ComandasController",
         "action": "createComanda"
+    },
+    "/modificarComandas": {
+        "controller": "ComandasController",
+        "action": "modifyComanda"
     }
 }

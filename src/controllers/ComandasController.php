@@ -70,12 +70,60 @@ class ComandasController extends AbstractController
 
             $entityM->persist($comanda);
             $entityM->flush();
-            $msg = 'Comanda creada con éxito';
-            $this->main->jsonResponse('POST', $msg, 200);
+            $msg = 'Comanda creada con exito'. $comanda->getIdComanda();
+            $this->main->jsonResponse('POST', $msg, 201);
         } else {
             $msg = 'Error al crear la comanda';
-            $this->main->jsonResponse('POST', $msg, 400);
+            $this->main->jsonResponse('POST', $msg, 500);
             return;
+        }
+    }
+
+    public function modifyComanda()
+    {
+        $entityM = $this->em->getEntityManager();
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'PUT') {
+            $msg = 'Método no permitido. Se espera una petición PUT.';
+            $this->main->jsonResponse('PUT', $msg, 405);
+            return;
+        }
+
+        $jsonData = file_get_contents('php://input');
+        $data = json_decode($jsonData, true);
+
+        if ($data) {
+            $comanda = $entityM->getRepository(ComandasEntity::class)->find($data['id']);
+            if (!$comanda) {
+                $msg = 'Comanda no encontrada: ' . $data['id'];
+                $this->main->jsonResponse('PUT', $msg, 400);
+                return;
+            }
+
+            $comanda->setMesa($entityM->getRepository(MesaEntity::class)->find($data['mesa']));
+            $comanda->setComensales($data['comensales']);
+            $comanda->setDetalles($data['detalles']);
+            $comanda->setFecha(new \DateTime($data['fecha']));
+            $comanda->setEstado(true);
+
+            foreach ($data['lineas'] as $linea) {
+                $lineaComanda = $entityM->getRepository(LineasComandasEntity::class)->find($linea['id']);
+                if ($lineaComanda) {
+                    $lineaComanda->setProducto($entityM->getRepository(ProductosEntity::class)->find($linea['producto']));
+                    $lineaComanda->setCantidad($linea['cantidad']);
+                    $lineaComanda->setEntregado(false);
+                    $entityM->persist($lineaComanda);
+                }
+            }
+
+            $entityM->persist($comanda);
+            $entityM->flush();
+
+            $msg = 'Comanda modificada con exito' . $comanda->getIdComanda();
+            $this->main->jsonResponse('PUT', $msg, 201);
+        } else {
+            $msg = 'Error al procesar los datos. Asegúrese de que el JSON es válido.';
+            $this->main->jsonResponse('PUT', $msg, 500);
         }
     }
 }
